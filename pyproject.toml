@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "test"
+version = "1.0.0"
+description = "test"
+authors = ["Sina"]
+license = "Proprietary"
+repository = "https://github.com/Sinaaa95/ci-cd"
+packages = []
+
+[tool.poetry.dependencies]
+python = ">=3.12.0,<3.13.0"
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^3.8.0"
+
+
+[tool.bandit]
+exclude_dirs = [
+    ".venv",
+    ".git",
+    "__pycache__",
+    "**/.terraform/*",
+]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
