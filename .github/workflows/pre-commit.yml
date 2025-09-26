@@ -1,0 +1,35 @@
+name: Pre-commit
+
+on: push
+
+jobs:
+  pre-commit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # Checkout the repository code
+      - uses: actions/checkout@v4
+
+      # Set up Python environment for backend tools
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # Set up Node.js environment for frontend tools (ESLint, TypeScript)
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '23'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      # Install pre-commit framework for running hooks
+      - name: Install pre-commit
+        run: pip install pre-commit
+
+      # Install frontend dependencies required by ESLint and TypeScript hooks
+      - name: Install frontend dependencies
+        run: cd frontend && npm ci
+
+      # Run all pre-commit hooks (linting, formatting, type checking)
+      - name: Run pre-commit hooks on all the hooks
+        run: pre-commit run -a
